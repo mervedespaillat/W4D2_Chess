@@ -1,8 +1,8 @@
 
 class Board
-    attr_accessor :board
-    def initialize 
-    row = Array.new(8){Array.new(8)}
+    attr_reader :rows
+    def initialize
+        @rows = Array.new(8){Array.new(8)}
     
     end
 
@@ -17,11 +17,12 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
-        
-        raise "not a valid position" if valid_pos?(end_pos)
 
 
     end
+        
+        # raise "not a valid position" if valid_pos?(end_pos)
+
 
     def valid_pos?(pos)
         #checking if the position on the board
@@ -34,7 +35,8 @@ class Board
     end
 
 private
-@null_piece = NullPiece
+# @null_piece = NullPiece
 
 
 end
+
