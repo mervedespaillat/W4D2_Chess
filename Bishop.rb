@@ -12,13 +12,7 @@ class Bishop < Piece
 
   def move_dirs
     # return the directions in which a bishop can move
-    [
-        [1,1],
-        [-1, 1],
-        [-1, -1],
-        [1, -1]
-
-    ]
+    DIAGONAL_DIRS
     # a bishop can move diagonally
   end
 end

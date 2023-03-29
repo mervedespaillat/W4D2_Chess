@@ -17,7 +17,7 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
-
+        return "not a valid position!" if !valid_pos?(end_pos)
         # Check if start position has a piece
         piece = self[start_pos]
         if piece == nil
@@ -33,8 +33,6 @@ class Board
         # Set piece at end position & remove from start
         self[end_pos] = piece
         self[start_pos] = nil
-
-
     end
         
         # raise "not a valid position" if valid_pos?(end_pos)

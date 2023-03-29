@@ -4,7 +4,8 @@ class Piece
     def initialize(color, board, pos)
     @color = color
     @board = board
-    @pos = []
+    @pos = pos
+    @null_piece = NullPiece
     end
 end
 

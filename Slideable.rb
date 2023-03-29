@@ -7,10 +7,10 @@ module Slideable
       # its position changes to [1,3]
       # the row increases by 0 and the column increases by 1
   HORIZONTAL_DIRS = [
-    [:dx, :dy], # left
-    [:dx, :dy], # right
-    [:dx, :dy], # up (vertical)
-    [:dx, :dy]  # down (vertical)
+    [0, -1], # left
+    [0, 1], # right
+    [-1, 0], # up (vertical)
+    [1, 0]  # down (vertical)
   ].freeze
 
   # DIAGONAL_DIRS stores an array of diagonal directions
@@ -24,9 +24,11 @@ module Slideable
 
   def horizontal_dirs
     # getter for HORIZONTAL_DIRS
+    HORIZONTAL_DIRS
   end
 
   def diagonal_dirs
+    DIAGONAL_DIRS
     # getter for DIAGONAL_DIRS
   end
 
@@ -34,21 +36,13 @@ module Slideable
   # should return an array of places a Piece can move to
   def moves
     # create array to collect moves
-    moves = []
-    curr_x, curr_y = self.pos
-    # curr_x, curr_y = position
-
-
-        DIAGONAL_DIRS.each do |x, y|
-         
-            new_pos = [curr_x += x, curr_y += y]
-            
+    moves =[]
+        move_dirs.each do |x, y|    
             # position = [curr_x, curr_y]
-            if board.valid_pos?(new_pos) && Piece.pos[new_pos].color != self.color
-                #get back to it later to add
-                moves << new_pos
-            end
+           moves += grow_unblocked_moves_in_dir(x,y) # 
+                #get back to it later to add   
         end
+        moves
     # iterate over each of the directions in which a slideable piece can move
       # use the Piece subclass' `#move_dirs` method to get this info
       # for each direction, collect all possible moves in that direction
@@ -75,9 +69,18 @@ module Slideable
     # get the piece's current row and current column
     curr_x, curr_y = self.pos
 
-    while (curr_x >= 0 || curr_x < 8) && (curr_y >= 0 || curr_y <8)
-        curr_x += dx
-        curr_y += dy
+    while (curr_x >= 0 || curr_x < 8) && (curr_y >= 0 || curr_y <8) 
+      new_pos =  curr_x += dx, curr_y += dy
+       if board[new_pos] == null_piece
+        moves << new_pos
+       elsif board[new_pos].color != self.color
+        moves << new_pos
+        break
+       else 
+        break
+       end
+      end
+        return moves
         
     # in a loop:
       # continually increment the piece's current row and current column to generate a new position
