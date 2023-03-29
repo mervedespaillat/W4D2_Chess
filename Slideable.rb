@@ -15,10 +15,10 @@ module Slideable
 
   # DIAGONAL_DIRS stores an array of diagonal directions
   DIAGONAL_DIRS = [
-    [:dx, :dy], # up + left
-    [:dx, :dy], # up + right
-    [:dx, :dy], # down + left
-    [:dx, :dy]  # down + right
+    [-1, 1], # up + left
+    [1, 1], # up + right
+    [-1, -1], # down + left
+    [-1, 1]  # down + right
   ].freeze
 
 
@@ -34,7 +34,21 @@ module Slideable
   # should return an array of places a Piece can move to
   def moves
     # create array to collect moves
+    moves = []
+    curr_x, curr_y = self.pos
+    # curr_x, curr_y = position
 
+
+        DIAGONAL_DIRS.each do |x, y|
+         
+            new_pos = [curr_x += x, curr_y += y]
+            
+            # position = [curr_x, curr_y]
+            if board.valid_pos?(new_pos) && Piece.pos[new_pos].color != self.color
+                #get back to it later to add
+                moves << new_pos
+            end
+        end
     # iterate over each of the directions in which a slideable piece can move
       # use the Piece subclass' `#move_dirs` method to get this info
       # for each direction, collect all possible moves in that direction
@@ -57,9 +71,14 @@ module Slideable
   # the given direction is represented by two args, the combination of a dx and dy
   def grow_unblocked_moves_in_dir(dx, dy)
     # create an array to collect moves
-
+    moves = []
     # get the piece's current row and current column
+    curr_x, curr_y = self.pos
 
+    while (curr_x >= 0 || curr_x < 8) && (curr_y >= 0 || curr_y <8)
+        curr_x += dx
+        curr_y += dy
+        
     # in a loop:
       # continually increment the piece's current row and current column to generate a new position
       # stop looping if the new position is invalid (not on the board); the piece can't move in this direction
