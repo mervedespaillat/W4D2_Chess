@@ -8,7 +8,7 @@ class Knight < Piece
     '♞'.colorize(color)
   end
 
-
+  
 
   protected
 
@@ -23,7 +23,7 @@ class Knight < Piece
       [2, -1],
       [-1, -2],
       [-2, -1]  ]
-  end
+  
 end
 
 include Stepable
