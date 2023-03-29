@@ -8,12 +8,12 @@ class Board
 
     def [](pos)
         row, col = pos
-        @row[row][col]
+        @rows[row][col]
     end
 
     def []=(pos,val)
         row, col = pos
-        @row[row][col] = val
+        @rows[row][col] = val
     end
 
     def move_piece(start_pos, end_pos)
@@ -24,7 +24,12 @@ class Board
             raise "There is no piece here."
         end
 
-
+        # Check if end position is within the grid/board
+        # row, col = end_pos
+        # if (row < 0 || row > 7) || (col < 0 || col > 7)
+        #     raise "Not a valid end position"
+        # end
+  
         # Set piece at end position & remove from start
         self[end_pos] = piece
         self[start_pos] = nil
@@ -37,18 +42,17 @@ class Board
 
     def valid_pos?(pos)
         #checking if the position on the board
-        if ((pos[0] < 8 && pos[0] >=0) && (pos[1] < 8 && pos[1] >=0)) &&
-            self[pos] == null_piece
+
+        if ((pos[0] < 8 || pos[0] >=0) && (pos[1] < 8 || pos[1] >=0)) && self[pos] == nil
+
+            #check the piece's color at end_pos
             #add another condition for empty position
              return true
         end
         false
 
-        # # Check if end position is within the grid/board
-        # x, y = end_pos
-        # if (x < 0  x > 7)  (y < 0 || y > 7)
-        #     raise "Not a valid end position"
-        # end
+
+
         
     end
 
