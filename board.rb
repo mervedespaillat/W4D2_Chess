@@ -18,6 +18,17 @@ class Board
 
     def move_piece(start_pos, end_pos)
 
+        # Check if start position has a piece
+        piece = self[start_pos]
+        if piece == nil
+            raise "There is no piece here."
+        end
+
+
+        # Set piece at end position & remove from start
+        self[end_pos] = piece
+        self[start_pos] = nil
+
 
     end
         
@@ -32,6 +43,13 @@ class Board
              return true
         end
         false
+
+        # # Check if end position is within the grid/board
+        # x, y = end_pos
+        # if (x < 0  x > 7)  (y < 0 || y > 7)
+        #     raise "Not a valid end position"
+        # end
+        
     end
 
 private
